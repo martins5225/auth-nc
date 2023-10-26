@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
 	ConfirmationResult,
 	RecaptchaVerifier,
 	signInWithPhoneNumber,
 } from 'firebase/auth';
 import { FormEvent, useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDisclosure, useToast } from '@chakra-ui/react';
 
 import Login from '../components/Login';

@@ -9,9 +9,8 @@ import {
 	Stack,
 	useColorModeValue,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import PhoneNumberInput from '../components/PhoneNumberInput';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
