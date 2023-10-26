@@ -1,9 +1,5 @@
-import {
-	ConfirmationResult,
-	RecaptchaVerifier,
-	signInWithPhoneNumber,
-} from 'firebase/auth';
 import { FormEvent, useEffect, useState } from 'react';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDisclosure, useToast } from '@chakra-ui/react';
 
@@ -13,24 +9,29 @@ import { authentication } from '../../firebase.config';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+interface User {
+	id: string;
+	phoneNumber: string;
+	name: string;
+	email: string;
+}
+
 const LoginContainer = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [phone, setPhone] = useState<string>('');
 	const [code, setCode] = useState<string>('');
 	const [userId, setUserId] = useState<string>('');
-	const [users, setUsers] = useState([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [users, setUsers] = useState<User[]>([]);
 	const toast = useToast();
-	const confirmationResult: ConfirmationResult | null = null;
 
-	const generateRecaptcha = () => {
+	const generateRecaptcha = (event: FormEvent) => {
 		window.recaptchaVerifier = new RecaptchaVerifier(
 			authentication,
 			'recaptcha-container',
 			{
 				size: 'invisible',
-				callback: (_response: any) => {
-					handleFormSubmit();
+				callback: () => {
+					handleFormSubmit(event);
 				},
 			}
 		);
@@ -48,7 +49,7 @@ const LoginContainer = () => {
 			});
 	};
 
-	const findUserIdByPhoneNumber = (phone, users) => {
+	const findUserIdByPhoneNumber = (phone: string, users: User[]) => {
 		const user = users.find((user) => user.phoneNumber === phone);
 		if (user) {
 			return setUserId(user.id);
@@ -70,7 +71,6 @@ const LoginContainer = () => {
 				console.log(response.data);
 			})
 			.catch((error) => {
-				setIsLoading(false);
 				console.error('Failed to send user data to the server:', error);
 			});
 	};
@@ -88,7 +88,7 @@ const LoginContainer = () => {
 
 	const handleFormSubmit = (event: FormEvent) => {
 		event.preventDefault();
-		generateRecaptcha();
+		generateRecaptcha(event);
 		const appVerifier: any = window.recaptchaVerifier;
 		onOpen();
 		signInWithPhoneNumber(authentication, phone, appVerifier)
