@@ -1,14 +1,16 @@
-import { Auth } from 'firebase/auth';
-import { getAuth } from 'firebase/auth';
+import 'firebase/auth';
+
+import { Auth, getAuth } from 'firebase/auth';
+
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyBNsXGA0T3gWFGS69f1YgtXMx83tiLp22A',
-	authDomain: 'auth-nc-47ccc.firebaseapp.com',
-	projectId: 'auth-nc-47ccc',
-	storageBucket: 'auth-nc-47ccc.appspot.com',
-	messagingSenderId: '221915830112',
-	appId: '1:221915830112:web:53fc43831484aef76bb005',
+	apiKey: 'YOUR_API_KEY',
+	authDomain: 'YOUR_AUTH_DOMAIN',
+	projectId: 'YOUR_PROJECT_ID',
+	storageBucket: 'YOUR_STORAGE_BUCKET',
+	messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+	appId: 'YOUR_APP_ID',
 };
 
 const app = initializeApp(firebaseConfig);

@@ -1,5 +1,9 @@
+import {
+	ConfirmationResult,
+	RecaptchaVerifier,
+	signInWithPhoneNumber,
+} from 'firebase/auth';
 import { FormEvent, useEffect, useState } from 'react';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDisclosure, useToast } from '@chakra-ui/react';
 
@@ -106,7 +110,9 @@ const LoginContainer = () => {
 		const otp = code;
 		console.log(otp);
 		if (otp.length === 6) {
-			const confirmationResult = window.confirmationResult;
+			const confirmationResult: ConfirmationResult =
+				window.confirmationResult as ConfirmationResult;
+
 			try {
 				if (confirmationResult) {
 					const result = await confirmationResult.confirm(otp);
