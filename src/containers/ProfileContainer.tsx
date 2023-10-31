@@ -133,7 +133,7 @@ const ProfileContainer = () => {
 							<Input type="email" value={email} onChange={handleEmailChange} />
 						</FormControl>
 						<HStack spacing={10}>
-							<Button mt={5} color={'white'} onClick={() => signOut(auth)}>
+							<Button mt={5} onClick={() => signOut(auth)}>
 								{' '}
 								Logout
 							</Button>
