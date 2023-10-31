@@ -8,7 +8,6 @@ interface PhoneProps {
 }
 
 const PhoneNumberInput = ({ phone, setPhone }: PhoneProps) => {
-	console.log(phone);
 	return (
 		<div>
 			<PhoneInput

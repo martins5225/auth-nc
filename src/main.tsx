@@ -15,7 +15,7 @@ const router = createBrowserRouter([
 		element: <LoginContainer />,
 	},
 	{
-		path: '/profile',
+		path: '/profile/:userId',
 		element: (
 			<AuthRoute>
 				<ProfileContainer />

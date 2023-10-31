@@ -28,6 +28,17 @@ const LoginContainer = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	const toast = useToast();
 
+	useEffect(() => {
+		if (userId) {
+			navigate(`/profile/${userId}`);
+			toast({
+				title: 'Signed in successfully',
+				status: 'success',
+				position: 'top',
+			});
+		}
+	}, [userId]);
+
 	const generateRecaptcha = (event: FormEvent) => {
 		window.recaptchaVerifier = new RecaptchaVerifier(
 			auth,
@@ -45,18 +56,16 @@ const LoginContainer = () => {
 		axios
 			.get('https://us-central1-auth-nc-47ccc.cloudfunctions.net/app/users')
 			.then((response) => {
-				console.log(response.data);
 				setUsers(response.data);
 			})
 			.catch((error) => {
 				console.error('Failed to fetch users:', error);
 			});
 	};
-
 	const findUserIdByPhoneNumber = (phone: string, users: User[]) => {
 		const user = users.find((user) => user.phoneNumber === phone);
 		if (user) {
-			return setUserId(user.id);
+			setUserId(user.id);
 		}
 		return;
 	};
@@ -97,8 +106,7 @@ const LoginContainer = () => {
 		onOpen();
 		signInWithPhoneNumber(auth, phone, appVerifier)
 			.then((confirmationResult) => {
-				window.confirmationResult = confirmationResult; // Set confirmationResult here
-				console.log(confirmationResult);
+				window.confirmationResult = confirmationResult;
 			})
 			.catch((error: Error) => {
 				console.log(error);
@@ -108,7 +116,6 @@ const LoginContainer = () => {
 	const onOTPVerify = async (e: FormEvent) => {
 		e.preventDefault();
 		const otp = code;
-		console.log(otp);
 		if (otp.length === 6) {
 			const confirmationResult: ConfirmationResult =
 				window.confirmationResult as ConfirmationResult;
@@ -117,15 +124,7 @@ const LoginContainer = () => {
 				if (confirmationResult) {
 					const result = await confirmationResult.confirm(otp);
 					console.log(result);
-					console.log(userId);
 					checkPhoneNumberExists();
-					console.log('Phone number verified. OTP: ' + otp);
-					navigate(`/profile/${userId}`);
-					toast({
-						title: 'Signed in successfully',
-						status: 'success',
-						position: 'top',
-					});
 				} else {
 					console.log('Confirmation result is not available.');
 				}
@@ -150,7 +149,7 @@ const LoginContainer = () => {
 				code={code}
 				setCode={setCode}
 				phone={phone}
-				onVerify={onOTPVerify}
+				onVerify={(event: FormEvent) => onOTPVerify(event)}
 			/>
 		</>
 	);

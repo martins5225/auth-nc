@@ -19,7 +19,6 @@ const AuthRoute = ({ children }: Props) => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setLoading(false);
 			if (!user) {
-				console.log('Unauthorized');
 				toast({
 					title: 'Unauthorized',
 					description: 'Kindly login to view profile.',
@@ -31,7 +30,7 @@ const AuthRoute = ({ children }: Props) => {
 		});
 
 		return () => unsubscribe(); // Cleanup on unmount
-	}, [auth, navigate]);
+	}, [auth]);
 
 	if (loading) return <p>Loading....</p>;
 	return <>{children}</>;

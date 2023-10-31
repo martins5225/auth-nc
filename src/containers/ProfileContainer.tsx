@@ -4,11 +4,13 @@ import {
 	Flex,
 	FormControl,
 	FormLabel,
+	HStack,
 	Heading,
 	Input,
 	Stack,
 	useColorModeValue,
 } from '@chakra-ui/react';
+import { getAuth, signOut } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
@@ -17,12 +19,11 @@ import { useToast } from '@chakra-ui/react';
 
 const ProfileContainer = () => {
 	const { userId } = useParams();
-	console.log(userId);
 	const toast = useToast();
+	const auth = getAuth();
 
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
-	const [phone, setPhone] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
 	const isEmailValid = (email: string) => {
@@ -40,8 +41,6 @@ const ProfileContainer = () => {
 				`https://us-central1-auth-nc-47ccc.cloudfunctions.net/app/users/${userId}`
 			)
 			.then((response) => {
-				console.log(response.data);
-				setPhone(response.data.phoneNumber);
 				setName(response.data.name);
 				setEmail(response.data.email);
 			})
@@ -77,12 +76,9 @@ const ProfileContainer = () => {
 		setIsLoading(true);
 
 		const userObject = {
-			PhoneNumber: phone,
 			name: name,
 			email: email,
 		};
-
-		console.log(userObject);
 
 		axios
 			.patch(
@@ -136,7 +132,11 @@ const ProfileContainer = () => {
 							<FormLabel>Email address</FormLabel>
 							<Input type="email" value={email} onChange={handleEmailChange} />
 						</FormControl>
-						<Stack spacing={10}>
+						<HStack spacing={10}>
+							<Button mt={5} color={'white'} onClick={() => signOut(auth)}>
+								{' '}
+								Logout
+							</Button>
 							<Button
 								mt={5}
 								bg={'blue.400'}
@@ -149,7 +149,7 @@ const ProfileContainer = () => {
 							>
 								Save
 							</Button>
-						</Stack>
+						</HStack>
 					</Stack>
 				</Box>
 			</Stack>

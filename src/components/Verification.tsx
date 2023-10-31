@@ -33,12 +33,6 @@ const Verification = ({
 	setCode,
 	onVerify,
 }: VerificationProps) => {
-	// const handleCodeSubmit = (e: React.FormEvent) => {
-	// 	e.preventDefault();
-	// 	console.log(code);
-	// 	onVerify();
-	// };
-
 	return (
 		<>
 			<Modal onClose={onClose} isOpen={isOpen} isCentered>
