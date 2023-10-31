@@ -9,7 +9,7 @@ import { useDisclosure, useToast } from '@chakra-ui/react';
 
 import Login from '../components/Login';
 import Verification from '../components/Verification';
-import { authentication } from '../../firebase.config';
+import { auth } from '../../firebase.config';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const LoginContainer = () => {
 
 	const generateRecaptcha = (event: FormEvent) => {
 		window.recaptchaVerifier = new RecaptchaVerifier(
-			authentication,
+			auth,
 			'recaptcha-container',
 			{
 				size: 'invisible',
@@ -95,7 +95,7 @@ const LoginContainer = () => {
 		generateRecaptcha(event);
 		const appVerifier: any = window.recaptchaVerifier;
 		onOpen();
-		signInWithPhoneNumber(authentication, phone, appVerifier)
+		signInWithPhoneNumber(auth, phone, appVerifier)
 			.then((confirmationResult) => {
 				window.confirmationResult = confirmationResult; // Set confirmationResult here
 				console.log(confirmationResult);
