@@ -39,7 +39,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Deployment
 
-The Web application is deployed on [Vercel](https://vercel.com/). You can access it [here](https://game-hub-three-opal.vercel.app/).
+The Web application is deployed on [Vercel](https://vercel.com/). You can access it [here](https://auth-firebase-zeta.vercel.app/).
 
 ## Getting Started
 
