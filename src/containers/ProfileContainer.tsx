@@ -25,6 +25,15 @@ const ProfileContainer = () => {
 	const [phone, setPhone] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
+	const isEmailValid = (email: string) => {
+		const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		return emailRegex.test(email);
+	};
+
+	const isNameValid = (name: string) => {
+		return name.trim() !== '';
+	};
+
 	const getUser = () => {
 		axios
 			.get(
@@ -43,7 +52,7 @@ const ProfileContainer = () => {
 
 	useEffect(() => {
 		getUser();
-	});
+	}, [userId]);
 
 	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value);
@@ -54,6 +63,17 @@ const ProfileContainer = () => {
 	};
 
 	const handleUserUpdate = () => {
+		// Validate name and email
+		if (!isNameValid(name) || !isEmailValid(email)) {
+			toast({
+				title: 'Validation Error',
+				description: 'Please enter a valid name and email address.',
+				status: 'error',
+				position: 'top',
+			});
+			return;
+		}
+
 		setIsLoading(true);
 
 		const userObject = {
