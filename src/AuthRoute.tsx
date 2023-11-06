@@ -1,3 +1,4 @@
+import { Flex, Spinner } from '@chakra-ui/react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
@@ -32,7 +33,12 @@ const AuthRoute = ({ children }: Props) => {
 		return () => unsubscribe(); // Cleanup on unmount
 	}, [auth]);
 
-	if (loading) return <p>Loading....</p>;
+	if (loading)
+		return (
+			<Flex height="100vh" justifyContent="center" alignItems="center">
+				<Spinner size="xl" />
+			</Flex>
+		);
 	return <>{children}</>;
 };
 

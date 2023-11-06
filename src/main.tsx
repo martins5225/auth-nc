@@ -1,6 +1,6 @@
 import './index.css';
 
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createHashRouter } from 'react-router-dom';
 
 import AuthRoute from './AuthRoute.tsx';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -9,7 +9,7 @@ import ProfileContainer from './containers/ProfileContainer.tsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <LoginContainer />,
